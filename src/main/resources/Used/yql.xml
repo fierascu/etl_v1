@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns:yahoo="http://www.yahooapis.com/v1/base.rng" yahoo:count="2" yahoo:created="2017-03-19T07:04:17Z" yahoo:lang="ro-RO">
+	<results>
+		<rate id="EURRON">
+			<Name>EUR/RON</Name>
+			<Rate>4.5499</Rate>
+			<Date>3/17/2017</Date>
+			<Time>9:30pm</Time>
+			<Ask>4.5524</Ask>
+			<Bid>4.5499</Bid>
+		</rate>
+		<rate id="USDRON">
+			<Name>USD/RON</Name>
+			<Rate>4.2269</Rate>
+			<Date>3/17/2017</Date>
+			<Time>10:01pm</Time>
+			<Ask>4.2422</Ask>
+			<Bid>4.2269</Bid>
+		</rate>
+	</results>
+</query>
+<!-- total: 6 -->
+<!-- prod_bf1_1;paas.yql;queryyahooapiscomproductionbf1;1b7a99aa-0b9d-11e7-a1ca-d4ae5297450a -->
