@@ -135,6 +135,7 @@ public class FilesIoWrite {
                     }
                     bulkProdList.clear();
                     contor = 0;
+                    log.info("Wrote: " + outputCsvProdFileName);
                 } catch (Exception e) {
                     log.error(e);
                 }
@@ -150,6 +151,7 @@ public class FilesIoWrite {
                         writer.writeNext(bl);
                     }
                     bulkProdList.clear();
+                    log.info("Wrote: " + outputCsvProdFileName);
                 } catch (Exception e) {
                     log.error(e);
                 }
@@ -157,7 +159,6 @@ public class FilesIoWrite {
 
         }
 
-        log.info("Wrote: " + outputCsvProd);
     }
 
 

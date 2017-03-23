@@ -7,13 +7,15 @@ import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.bst.utils.Utils.*;
 import static com.bst.utils.io.FilesIoRead.*;
 import static com.bst.utils.io.FilesIoWrite.prepareCats;
 import static com.bst.utils.io.FilesIoWrite.writeProductsToFile;
-import static com.bst.utils.Utils.*;
+import static com.bst.utils.io.ImagesIo.download;
 
 
 public class App {
@@ -30,17 +32,20 @@ public class App {
         List ml = readFileManufacturer(MANUFACTURER_FILE);
         List cl = readFileCategory(CATEGORY_FILE);
         List pl = processInputFileProduct(PRODUCT_FILE);//should be 11272
+        List pi = processInputProdFeedImages(PICS_FILE);//should be 19250
         // read existing products, filter after cod
 
         log.info("2. etl: MAGIC!");
-        List<ProdPojo> ppl = extractProdPojos(pfl, ml, cl, pl);
+        List<ProdPojo> ppl = extractProdPojos(pfl, ml, cl, pl, pi);
 
         log.info("3. write files:");
         prepareCats(ppl);
         writeProductsToFile(ppl);
+
+        //download(pi);
     }
 
-    private static List extractProdPojos(List<ProdFeed> pfla, List<Manufacturer> mla, List<Category> cla, List<Product> pla) {
+    private static List extractProdPojos(List<ProdFeed> pfla, List<Manufacturer> mla, List<Category> cla, List<Product> pla, List<ProdFeedImage> pia) {
         List<ProdPojo> resList = new ArrayList<>();
 
         Set<String> uniqueExistingProdByReferint = pla.stream()
@@ -57,11 +62,32 @@ public class App {
                 .collect(Collectors.toList());
 
         log.info("Filter existing products by code: initial=" + pfla.size() + " resulting filterdProdFeedFromProdByCode.size=" + filterdProdFeedFromProdByCode.size());
-        //Filter existing products by code: initial=12961 resulting listOutput.size=0
 
-        resList = convertFeedProdToProd(filterdProdFeedFromProdByCode, cla);
+        List<ProdPojo> prl = convertFeedProdToProd(filterdProdFeedFromProdByCode, cla);
+
+
+        // adding images
+        /*  resList = prl.stream()
+                .forEach(e -> e.setImage(extractImage(pia, e.getId())))
+                .collect(Collectors.toList());
+        */
+
+        for (ProdPojo pp : prl) {
+            pp.setImage(extractImage(pia, pp.getId()));
+            resList.add(pp);
+        }
+
+
+        log.info("Prods with images resList.size=" + resList.size());
+
         return resList;
     }
+
+    private static String extractImage(List<ProdFeedImage> pia, String id) {
+        Optional<ProdFeedImage> first = pia.stream().filter(p -> id.equalsIgnoreCase(p.getProdFeedId())).findFirst();
+        return first.orElse(new ProdFeedImage("")).getProdPojoImage();
+    }
+
 
     private static List<ProdPojo> convertFeedProdToProd(List<ProdFeed> filterdProdFeedFromProdByCode, List<Category> cla) {
         List<ProdPojo> result = new ArrayList<>();

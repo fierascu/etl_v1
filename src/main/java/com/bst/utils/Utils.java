@@ -27,6 +27,7 @@ public class Utils {
     public static String MANUFACTURER_FILE = WORKING_DIR + "manufacturer.csv";
     public static String CATEGORY_FILE = WORKING_DIR + "category.csv";
     public static String PRODUCT_FILE = WORKING_DIR + "product.csv";
+    public static String PICS_FILE = WORKING_DIR + "poze.csv";
     // variables
     public static String SEPARATOR = ";";
     public static char SEPARATOR_CHAR = SEPARATOR.charAt(0);
@@ -117,6 +118,10 @@ public class Utils {
             }
         });
 
+    }
+
+    public static boolean isLocalFile(String path) {
+        return new File(path).exists();
     }
 
     public static String getFileWithUtil(String fileName) {

@@ -1,9 +1,6 @@
 package com.bst.utils.io;
 
-import com.bst.data.Category;
-import com.bst.data.Manufacturer;
-import com.bst.data.ProdFeed;
-import com.bst.data.Product;
+import com.bst.data.*;
 import com.opencsv.CSVReader;
 import org.apache.log4j.Logger;
 
@@ -13,13 +10,13 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.bst.utils.Utils.cleanDesc;
-import static com.bst.utils.Utils.isTestingWriting;
-import static com.bst.utils.Utils.stripQuotes;
+import static com.bst.utils.Utils.*;
 
 public class FilesIoRead {
 
     static Logger log = Logger.getLogger(FilesIoRead.class.getName());
+
+
     private static Function<String, ProdFeed> mapToItemProdFeed = (line) -> {
         String[] nextLine = line.split(",");
         ProdFeed prod = new ProdFeed();
@@ -190,26 +187,47 @@ public class FilesIoRead {
         return prod;
     };
 
+
+    private static Function<String, ProdFeedImage> mapToItemProdFeedImages = (line) -> {
+        String[] nextLine = line.split(",");
+        ProdFeedImage prod = new ProdFeedImage();
+        int col = 0;
+        if (nextLine.length > col) {
+            prod.setProdFeedId(stripQuotes(nextLine[col]));
+            col++; //1
+        }
+        if (nextLine.length > col) {
+            prod.setProdFeedCode(stripQuotes(nextLine[col]));
+            col++; //2
+        }
+        if (nextLine.length > col) {
+            prod.setProdPojoImage(stripQuotes(nextLine[col]));
+            col++;//3
+        }
+        if (nextLine.length > col) {
+            prod.setImageThumb(stripQuotes(nextLine[col]));
+            col++;//4
+        }
+        //log.trace(prod.toString());
+        return prod;
+    };
+
     private FilesIoRead() {
         throw new IllegalAccessError("Utility class");
     }
 
     public static void main(String[] args) {
-        //testStripQuotesOk();
     }
 
+    /**
+     * @deprecated replaced by processInputFileProdFeed
+     */
+    @Deprecated
     public static List<ProdFeed> readFileProdFeed(String file) {
-
-
-        //
-        processInputFileProdFeed(file);
-        //
         List<ProdFeed> resList = new ArrayList<>();
 
         try (CSVReader reader = new CSVReader(new FileReader(file), ',', '"', 1)) {
-            //
             //List<String[]> rows = reader.readAll();
-            //
             String[] nextLine;
             while ((nextLine = reader.readNext()) != null) {
                 if (isTestingWriting()) break;
@@ -438,6 +456,10 @@ public class FilesIoRead {
         return resList;
     }
 
+    /**
+     * @deprecated
+     */
+    @Deprecated
     public static List readFileProduct(String file) {
         List resList = new ArrayList<>();
 
@@ -495,13 +517,25 @@ public class FilesIoRead {
     }
 
     public static List processInputFileProdFeed(String inputFilePath) {
+        return processInputFile(inputFilePath, 1, mapToItemProdFeed);
+    }
+
+    public static List processInputFileProduct(String inputFilePath) {
+        return processInputFile(inputFilePath, 1, mapToItemProduct);
+    }
+
+    public static List processInputProdFeedImages(String inputFilePath) {
+        return processInputFile(inputFilePath, 0, mapToItemProdFeedImages);
+    }
+
+    public static List processInputFile(String inputFilePath, int skipRow, Function<? super String, ?> mapToItem) {
         List inputList = new ArrayList<>();
         try {
             File inputF = new File(inputFilePath);
             InputStream inputFS = new FileInputStream(inputF);
             BufferedReader br = new BufferedReader(new InputStreamReader(inputFS));
             // skip the header of the csv
-            inputList = br.lines().skip(1).map(mapToItemProdFeed).collect(Collectors.toList());
+            inputList = br.lines().skip(skipRow).map(mapToItem).collect(Collectors.toList());
             br.close();
             inputFS.close();
         } catch (IOException e) {
@@ -511,20 +545,6 @@ public class FilesIoRead {
         return inputList;
     }
 
-    public static List processInputFileProduct(String inputFilePath) {
-        List inputList = new ArrayList<>();
-        try {
-            File inputF = new File(inputFilePath);
-            InputStream inputFS = new FileInputStream(inputF);
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputFS));
-            // skip the header of the csv
-            inputList = br.lines().skip(1).map(mapToItemProduct).collect(Collectors.toList());
-            br.close();
-            inputFS.close();
-        } catch (IOException e) {
-            log.error(e);
-        }
-        log.trace(inputList.size() + " readed from " + inputFilePath);
-        return inputList;
-    }
+
+
 }
