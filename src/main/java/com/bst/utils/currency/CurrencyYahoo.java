@@ -1,4 +1,4 @@
-package com.bst;
+package com.bst.utils.currency;
 
 
 import org.apache.log4j.Logger;
@@ -16,9 +16,6 @@ import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
 import java.net.URL;
 
-import static com.bst.CurrencyUtil.EUR_DEFAULT_VALUE;
-import static com.bst.CurrencyUtil.USD_DEFAULT_VALUE;
-
 public class CurrencyYahoo {
 
     public static final String EXPR_EUR = "/query/results/rate[@id ='EURRON']/Rate/text()";
@@ -30,15 +27,15 @@ public class CurrencyYahoo {
 
     public CurrencyYahoo() {
         if (!setWithXPath(urlBegin)) {
-            setEur(EUR_DEFAULT_VALUE);
-            setUsd(USD_DEFAULT_VALUE);
+            setEur(CurrencyUtil.EUR_DEFAULT_VALUE);
+            setUsd(CurrencyUtil.USD_DEFAULT_VALUE);
         }
     }
 
     public CurrencyYahoo(String url) {
         if (!setWithXPath(url)) {
-            setEur(EUR_DEFAULT_VALUE);
-            setUsd(USD_DEFAULT_VALUE);
+            setEur(CurrencyUtil.EUR_DEFAULT_VALUE);
+            setUsd(CurrencyUtil.USD_DEFAULT_VALUE);
         }
     }
 

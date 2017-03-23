@@ -2,7 +2,7 @@ package com.bst.data;
 
 import java.util.Random;
 
-import static com.bst.Utils.OTHERS_DEFAULT_CATEGORY_NAME;
+import static com.bst.utils.Utils.OTHERS_DEFAULT_CATEGORY_NAME;
 
 public class CatPojo {
     //id;Active (0/1);Name*;Parent Category;Root category (0/1);Description;Meta-title;Meta-keywords;Meta-description;URL rewritten;Image URL;ID ou nom de la boutique

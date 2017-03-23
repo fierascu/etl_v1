@@ -1,4 +1,4 @@
-package com.bst;
+package com.bst.utils.io;
 
 import com.bst.data.Category;
 import com.bst.data.Manufacturer;
@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.bst.Utils.cleanDesc;
-import static com.bst.Utils.isTestingWriting;
-import static com.bst.Utils.stripQuotes;
+import static com.bst.utils.Utils.cleanDesc;
+import static com.bst.utils.Utils.isTestingWriting;
+import static com.bst.utils.Utils.stripQuotes;
 
 public class FilesIoRead {
 

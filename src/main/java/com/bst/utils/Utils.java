@@ -1,4 +1,4 @@
-package com.bst;
+package com.bst.utils;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;

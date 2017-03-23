@@ -1,4 +1,4 @@
-package com.bst;
+package com.bst.utils.currency;
 
 import java.util.HashMap;
 

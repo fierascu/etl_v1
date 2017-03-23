@@ -1,6 +1,8 @@
 package com.bst;
 
 import com.bst.data.*;
+import com.bst.utils.Utils;
+import com.bst.utils.currency.CurrencyUtil;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -8,10 +10,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.bst.FilesIoRead.*;
-import static com.bst.FilesIoWrite.prepareCats;
-import static com.bst.FilesIoWrite.writeProductsToFile;
-import static com.bst.Utils.*;
+import static com.bst.utils.io.FilesIoRead.*;
+import static com.bst.utils.io.FilesIoWrite.prepareCats;
+import static com.bst.utils.io.FilesIoWrite.writeProductsToFile;
+import static com.bst.utils.Utils.*;
 
 
 public class App {

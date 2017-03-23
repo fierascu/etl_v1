@@ -1,11 +1,13 @@
 package com.bst;
 
+import com.bst.utils.Utils;
+import com.bst.utils.currency.CurrencyYahoo;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.apache.log4j.Logger;
 
-import static com.bst.CurrencyYahoo.urlBegin;
+import static com.bst.utils.currency.CurrencyYahoo.urlBegin;
 
 public class CurrencyYahooTest extends TestCase {
 

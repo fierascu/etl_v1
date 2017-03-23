@@ -1,17 +1,18 @@
-package com.bst;
+package com.bst.utils.io;
 
 import com.bst.data.CatPojo;
 import com.bst.data.ProdPojo;
 import com.opencsv.CSVWriter;
+import org.apache.log4j.Logger;
 
 import java.io.FileWriter;
 import java.util.*;
 
-import static com.bst.App.log;
-import static com.bst.Utils.*;
 import static com.bst.data.CatPojo.getCategoryOrDefaultCat;
+import static com.bst.utils.Utils.*;
 
 public class FilesIoWrite {
+    static Logger log = Logger.getLogger(FilesIoWrite.class.getName());
 
     private FilesIoWrite() {
         throw new IllegalAccessError("Utility class");
@@ -58,7 +59,7 @@ public class FilesIoWrite {
                                 SEPARATOR +// Meta-title
                                 SEPARATOR +// Meta-keywords
                                 SEPARATOR +// Meta-description
-                                cat.name.toLowerCase().replaceAll(" ","-") + SEPARATOR +// URL rewritten
+                                cat.name.toLowerCase().replaceAll(" ", "-") + SEPARATOR +// URL rewritten
                                 cat.imageUrl + SEPARATOR +// Image URL
                                 cat.storeId // ID ou nom de la boutique;
                 ).split(SEPARATOR);
@@ -108,7 +109,7 @@ public class FilesIoWrite {
                             dr.getShortDesc() + SEPARATOR +//Meta-title
                             dr.getKeywords() + SEPARATOR +//Meta-keywords
                             dr.getShortDesc() + SEPARATOR +//Meta-description
-                            dr.getTitle().toLowerCase().replaceAll(" ","-") + SEPARATOR +//URL rewritten
+                            dr.getTitle().toLowerCase().replaceAll(" ", "-") + SEPARATOR +//URL rewritten
                             "In stock" + SEPARATOR +//Text when in-stock
                             "Out stock" + SEPARATOR +//Text if back-order allowed
                             "1" + SEPARATOR +//Available for order (0=No/1=Yes)

@@ -1,6 +1,6 @@
 package com.bst.data;
 
-import static com.bst.Utils.*;
+import static com.bst.utils.Utils.*;
 
 public class ProdPojo {
     private String id;
