@@ -44,6 +44,7 @@ public class App {
         List<ProdPojo> resList = new ArrayList<>();
 
         Set<String> uniqueExistingProdByReferint = pla.stream()
+                .filter(e -> !"".equalsIgnoreCase(e.getReferinta()))
                 .map(e -> e.getReferinta())
                 .collect(Collectors.toSet());
 
@@ -52,7 +53,7 @@ public class App {
 
 
         List<ProdFeed> filterdProdFeedFromProdByCode = pfla.stream()
-                .filter(e -> uniqueExistingProdByReferint.contains(e.getCode()))
+                .filter(e -> !uniqueExistingProdByReferint.contains(e.getCode()))
                 .collect(Collectors.toList());
 
         log.info("Filter existing products by code: initial=" + pfla.size() + " resulting filterdProdFeedFromProdByCode.size=" + filterdProdFeedFromProdByCode.size());
